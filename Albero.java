@@ -1,3 +1,5 @@
+import java.util.Collection;
+
 public class Albero<T>{
     protected Nodo<T> radice;
     protected Grafo<T, Boolean> albero;
@@ -31,7 +33,26 @@ public class Albero<T>{
     }
 
     public boolean remove(Nodo<T> nodo) {
+        if(!albero.contieneNodo(nodo)) {
+            return false;
+        }
+        else {
+            var archi = albero.getArchi(nodo);
+            Nodo<T> padre = null;
+            for(var a : archi) {
+                if(a.getLabel().equals(Boolean.TRUE)) {
+                    padre = a.getNodes().getFirst();
+                    albero.rimuoviArco(a);
+                    break;
+                }
+            }
+            for(var a : archi) {
+                if(a.getNodes().getSecond() != nodo) {
+                    albero.inserisciArco(new Arco<>(Boolean.TRUE, padre, a.getNodes().getSecond()));
+                }
+            }
 
+        }
     }
 
 

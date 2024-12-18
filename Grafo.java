@@ -19,7 +19,13 @@ public class Grafo<T, E> implements Iterable<Nodo<T>>{
         }
     }
 
+    //da revisionare
     public boolean rimuoviNodo(Nodo<T> nodo) {
+        for(var a : archi) {
+            if(a.getNodes().getFirst().equals(nodo) || a.getNodes().getSecond().equals(nodo)) {
+                rimuoviArco(a);
+            }
+        }
         return nodi.remove(nodo);
     }
 
@@ -32,13 +38,28 @@ public class Grafo<T, E> implements Iterable<Nodo<T>>{
         }
     }
 
-    public boolean rimuoviArco(Arco<T, E> arco) {
+    public boolean rimuoviArco(Arco<E, T> arco) {
         return archi.remove(arco);
     }
 
     public boolean contieneNodo(Nodo<T> nodo) {
         return nodi.contains(nodo);
     }
+
+    // da revisionare
+    public Collection<Arco<E, T>> getArchi(Nodo<T> nodo) {
+        if(!contieneNodo(nodo)) {
+            return null;
+        }
+        Collection<Arco<E, T>> ret = new ArrayList<>();
+        for(var a : archi) {
+            if(a.getNodes().getFirst().equals(nodo) || a.getNodes().getSecond().equals(nodo)) {
+                ret.add(a);
+            }
+        }
+        return ret;
+    }
+
 
     @Override
     public Iterator<Nodo<T>> iterator() {
